@@ -1,6 +1,10 @@
 name: Build APK
 
-on: [push]
+on:
+ push:
+    branches: [ main ]
+ pull_request:
+    branches: [ main ]
 
 jobs:
  build:
@@ -14,24 +18,9 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        distribution: 'adopt'
         java-version: '11'
-
-    - name: Set up Android SDK
-      uses: android-actions/setup-android@v2
-      with:
-        api-levels: '28'
-        build-tools: '29.0.3'
-        gradle-version: '6.5'
-        cmake: '3.18.1'
-        ndk: '21.3.6528147'
+        distribution: 'adopt'
 
     - name: Build APK
       run: |
-        cd ./app
         ./gradlew assembleRelease
-
-    - name: Analyze APK
-      run: |
-        cd ./app/build/outputs/apk/release
-        apksizer -a ../../../../release/app-release.apk
