@@ -16,29 +16,25 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: '11'  # Adjust to your desired Java version
+          java-version: '11'  
 
       - name: Install necessary dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential
-          sudo apt-get install -y libssl-dev libffi-dev
+          sudo apt-get install -y build-essential libssl-dev libffi-dev
 
-      - name: Print JDK version and paths
+      - name: Install Buildozer
         run: |
-          echo "JAVA_HOME=${JAVA_HOME}"
-          echo "PATH=${PATH}"
-          java -version
-          javac -version
+          pip3 install buildozer==1.5.0
 
       - name: Cache Buildozer directory
         uses: actions/cache@v2
         with:
           path: .buildozer
-          key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('buildozer.spec') }}-${{ hashFiles('specfiles') }}  # Include specfiles for more granular caching
+          key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('buildozer.spec') }}  # Include specfiles for granular caching
 
       - name: Build with Buildozer
-        run: buildozer android debug --buildozer-version=1.5.0
+        run: buildozer android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
