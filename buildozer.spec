@@ -109,7 +109,7 @@ android.presplash_color = black
 
 # (str) Android NDK version to use
 #android.ndk = 23b
-
+java.home = /opt/hostedtoolcache/Java_Adopt_jdk/8.0.392-8/x64
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21
 
