@@ -23,5 +23,7 @@ jobs:
 
     - name: Build APK
       run: |
-        chmod +x gradlew
-        ./gradlew assembleRelease
+        gradle assembleRelease
+      shell: /usr/bin/bash -e {0}
+      env:
+        JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/11.0.21-9/x64
