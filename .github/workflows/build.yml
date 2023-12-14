@@ -55,8 +55,6 @@ jobs:
         with:
           path: .buildozer
           key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
-      - name: Accept Android SDK Licenses
-        run: echo "y" | sdkmanager --licenses
 
       - name: Install AIDL
         run: sudo apt-get install -y aidl
@@ -66,6 +64,7 @@ jobs:
         id: buildozer
         with:
           command: buildozer android debug
+            echo "y" | sdkmanager --licenses
           buildozer_version: master
 
       - name: Upload artifacts
