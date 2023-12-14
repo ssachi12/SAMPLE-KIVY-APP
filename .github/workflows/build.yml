@@ -31,23 +31,18 @@ jobs:
           java -version
           javac -version
 
-      - name: Cache Buildozer global directory
-        uses: actions/cache@v2
-        with:
-          path: .buildozer_global
-          key: buildozer-global-${{ hashFiles('buildozer.spec') }}
-
       - name: Cache Buildozer directory
         uses: actions/cache@v2
         with:
           path: .buildozer
-          key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('buildozer.spec') }}
+          key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('buildozer.spec') }}-${{ hashFiles('specfiles') }}  # Include specfiles for more granular caching
 
       - name: Build with Buildozer
-        run: buildozer android debug
+        run: buildozer android debug --buildozer-version=<your_desired_version>
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app
+          name: app-debug-${{ github.sha }}
           path: ./bin/*.apk
+
