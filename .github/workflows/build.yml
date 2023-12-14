@@ -16,7 +16,9 @@ jobs:
         run: |
           echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
         shell: bash
-
+      - name: Install tAidl (Optional)
+        run: |
+          python -m pip install https://github.com/google/taidl/releases/download/v0.6.0/taidl-0.6.0-py3-none-any.whl
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
         with:
@@ -34,9 +36,6 @@ jobs:
         with:
           command: buildozer android debug
           buildozer_version: master
-      - name: Install tAidl (Optional)
-        run: |
-          python -m pip install https://github.com/google/taidl/releases/download/v0.6.0/taidl-0.6.0-py3-none-any.whl
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
