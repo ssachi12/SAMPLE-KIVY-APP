@@ -40,12 +40,7 @@ jobs:
           wget https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O android-sdk.zip
           unzip -q android-sdk.zip -d android-sdk
           export ANDROID_SDK_ROOT=$PWD/android-sdk
-          export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin 
-          
-      - name: Clean environment
-        run: |
-          rm -rf $HOME/.gradle/caches/
-          rm -rf $HOME/.m2/   
+          export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin    
         
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
