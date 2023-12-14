@@ -19,17 +19,16 @@ jobs:
       - name: Update buildozer
         run: python3 -m pip install --upgrade buildozer
         
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '8'
-      - name: Print JDK version and paths
+      - name: Install Java (Optional, adjust based on your needs)
         run: |
-          echo "JAVA_HOME=${JAVA_HOME}"
-          echo "PATH=${PATH}"
-          java -version
-          javac -version  
+          sudo apt update && sudo apt install -y --no-install-recommends openjdk-11-jdk-headless
+
+          # Add the JDK bin directory to PATH (comment out if using JDK_PATH)
+          # echo "export PATH=$(/usr/bin/java -verbose:class | grep '-Djava.home' | sed 's/.*:\///')" >> ~/.bashrc
+
+      - name: Set JDK path (alternative to PATH modification)
+        run: |
+          echo "jdk_path=$(/usr/bin/java -verbose:class | grep '-Djava.home' | sed 's/.*:\///')" >> buildozer.spec
           
       - name: Install build tools
         run: |
