@@ -18,10 +18,7 @@ jobs:
         shell: bash
       - name: Update buildozer
         run: python3 -m pip install --upgrade buildozer
-        
-      - name: Install AIDL
-        run: sudo apt-get install -y aidl
-
+  
       - name: Set ANDROID_HOME for AIDL
         run: echo "export ANDROID_HOME=/usr" >> $GITHUB_ENV 
         
@@ -58,7 +55,12 @@ jobs:
         with:
           path: .buildozer
           key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
+      - name: Accept Android SDK Licenses
+        run: echo "y" | sdkmanager --licenses
 
+      - name: Install AIDL
+        run: sudo apt-get install -y aidl
+        
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
