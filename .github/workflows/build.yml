@@ -16,8 +16,19 @@ jobs:
         run: |
           echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
         shell: bash
-      - name: Install tAidl
-        run: python -m pip install https://github.com/LiteKite/Android-AIDL
+      - name: Set up Android environment
+        uses: reactivecircuits/setup-android@v2
+        with:
+          components: "build-tools-29.0.3,android-29"
+      - name: Install AIDL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y aidl
+      - name: Debugging Info
+        run: |
+          echo "PATH=${PATH}"
+          echo "JAVA_HOME=${JAVA_HOME}"
+    
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
         with:
