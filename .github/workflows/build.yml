@@ -12,11 +12,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Get Date
-        id: get-date
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'  # Adjust to your desired Java version
+
+      - name: Print JDK version and paths
         run: |
-          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
-        shell: bash
+          echo "JAVA_HOME=${JAVA_HOME}"
+          echo "PATH=${PATH}"
+          java -version
+          javac -version
 
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
@@ -28,13 +35,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: .buildozer
-          key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
-
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
+          key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('buildozer.spec') }}
 
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
@@ -48,4 +49,3 @@ jobs:
         with:
           name: app
           path: ./bin/*.apk
-
