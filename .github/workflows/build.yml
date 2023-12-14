@@ -16,18 +16,28 @@ jobs:
         run: |
           echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
         shell: bash
-      - name: Set up Android environment
-        uses: reactivecircuits/setup-android@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
         with:
-          components: "build-tools-29.0.3,android-29"
-      - name: Install AIDL
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Install Android SDK
         run: |
-          sudo apt-get update
-          sudo apt-get install -y aidl
-      - name: Debugging Info
+          wget https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O android-sdk.zip
+          unzip -q android-sdk.zip -d android-sdk
+          export ANDROID_SDK_ROOT=$PWD/android-sdk
+          export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin
+
+      - name: Accept Android licenses
+        run: yes | sdkmanager --licenses
+
+      - name: Print JDK version and paths
         run: |
-          echo "PATH=${PATH}"
           echo "JAVA_HOME=${JAVA_HOME}"
+          echo "PATH=${PATH}"
+          java -version
+          javac -version
     
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
