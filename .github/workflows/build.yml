@@ -64,7 +64,7 @@ jobs:
         id: buildozer
         with:
           command: |
-            echo "y" | buildozer android debug -v
+            echo "y" | buildozer android debug -v --debug
           buildozer_version: master
 
       - name: Upload artifacts
