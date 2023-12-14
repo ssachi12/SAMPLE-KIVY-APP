@@ -65,7 +65,9 @@ jobs:
         with:
           command: buildozer android debug
           buildozer_version: master
-            echo "y" | sdkmanager --licenses
+          
+      - name: Accept sdkmanager licence
+        run: echo "y" | sdkmanager --licenses
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
