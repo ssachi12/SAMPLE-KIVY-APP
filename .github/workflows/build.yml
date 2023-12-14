@@ -29,13 +29,17 @@ jobs:
           export ANDROID_SDK_ROOT=$PWD/android-sdk
           export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin
 
-      - name: Print JDK version and paths
-        run: |
-          echo "JAVA_HOME=${JAVA_HOME}"
-          echo "PATH=${PATH}"
-          java -version
-          javac -version
-    
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+      - name: Print JAVA_HOME
+        run: echo "JAVA_HOME=${JAVA_HOME}"
+        
+      - name: Print PATH
+        run: echo "PATH=${PATH}"  
+        
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
         with:
