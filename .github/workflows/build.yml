@@ -1,44 +1,37 @@
-name: CI
+name: Build APK
 
-on:
-  push:
-    branches: [main]
+on: [push]
 
 jobs:
-  build:
+ build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'  
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
 
-      - name: Install necessary dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential libssl-dev libffi-dev
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v2
+      with:
+        api-levels: '28'
+        build-tools: '29.0.3'
+        gradle-version: '6.5'
+        cmake: '3.18.1'
+        ndk: '21.3.6528147'
 
-      - name: Install Buildozer
-        run: |
-          pip3 install buildozer==1.5.0
+    - name: Build APK
+      run: |
+        cd ./app
+        ./gradlew assembleRelease
 
-      - name: Cache Buildozer directory
-        uses: actions/cache@v2
-        with:
-          path: .buildozer
-          key: ${{ runner.os }}-${{ github.sha }}-${{ hashFiles('buildozer.spec') }}  # Include specfiles for granular caching
-
-      - name: Build with Buildozer
-        run: buildozer android debug
-
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-debug-${{ github.sha }}
-          path: ./bin/*.apk
-
+    - name: Analyze APK
+      run: |
+        cd ./app/build/outputs/apk/release
+        apksizer -a ../../../../release/app-release.apk
