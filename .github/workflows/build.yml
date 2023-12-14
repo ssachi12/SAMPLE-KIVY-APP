@@ -19,6 +19,10 @@ jobs:
       - name: Update buildozer
         run: python3 -m pip install --upgrade buildozer
         
+      - name: Install AIDL
+        run: sudo apt-get install -y aidl
+
+        
       - name: Install Java (Optional, adjust based on your needs)
         run: |
           sudo apt update && sudo apt install -y --no-install-recommends openjdk-11-jdk-headless
