@@ -22,6 +22,8 @@ jobs:
       - name: Install AIDL
         run: sudo apt-get install -y aidl
 
+      - name: Set ANDROID_HOME for AIDL
+        run: echo "export ANDROID_HOME=/usr" >> $GITHUB_ENV 
         
       - name: Install Java (Optional, adjust based on your needs)
         run: |
