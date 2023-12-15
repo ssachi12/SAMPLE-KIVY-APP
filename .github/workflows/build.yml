@@ -16,16 +16,6 @@ jobs:
         run: |
           echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
         shell: bash
-      - name: Install Python Dev Headers
-        run: |
-          sudo apt-get install python3-dev
-      - uses: actions/cache@v2
-        with:
-          path: |
-            .buildozer_global
-            .buildozer
-            .ccache  # Include the .ccache directory
-          key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
   
       - name: Update Buildozer
         run: | 
@@ -33,6 +23,7 @@ jobs:
           python3 -m pip install --upgrade kivy pyjnius
           sudo apt-get install lld
           sudo apt-get install ccache
+          pip install cython==0.29.19
           
       - name: Install Java (Optional, adjust based on your needs)
         run: |
