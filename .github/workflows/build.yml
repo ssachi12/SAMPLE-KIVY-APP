@@ -19,7 +19,7 @@ jobs:
       - name: Update Buildozer
         run: | 
           python3 -m pip install --upgrade buildozer
-          python3 -m pip install --upgrade kivy
+          python3 -m pip install --upgrade kivy pyjnius
         
       - name: Install Java (Optional, adjust based on your needs)
         run: |
