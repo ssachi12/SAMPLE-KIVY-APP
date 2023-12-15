@@ -75,9 +75,6 @@ jobs:
           command: |
             echo "y" | buildozer android debug
           buildozer_version: master
-            
-      - name: Clean Buildozer
-        run: buildozer android clean
         if: ${{ always() }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
