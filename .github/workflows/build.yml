@@ -18,7 +18,8 @@ jobs:
         shell: bash
 
       - name: Update Buildozer
-        run: | 
+        run: |
+          python -m pip install --upgrade pip
           python3 -m pip install --upgrade buildozer
           python3 -m pip install --upgrade kivy pyjnius
           pip install jnius
@@ -48,17 +49,6 @@ jobs:
           export ANDROID_SDK_ROOT=$PWD/android-sdk
           export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin    
         
-      - name: Cache Buildozer global directory
-        uses: actions/cache@v2
-        with:
-          path: .buildozer_global
-          key: buildozer-global-${{ hashFiles('buildozer.spec') }} # Replace with your path
-
-      - uses: actions/cache@v2
-        with:
-          path: .buildozer
-          key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
-
       - name: Install AIDL
         run: sudo apt-get install -y aidl
       - name: Print Environment Info
@@ -72,7 +62,7 @@ jobs:
         with:
           command: |
             echo "y" | buildozer android debug
-          buildozer_version: 0.11.2
+          buildozer_version: master
         if: ${{ always() }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
