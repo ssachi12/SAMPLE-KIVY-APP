@@ -19,7 +19,14 @@ jobs:
       - name: Install Python Dev Headers
         run: |
           sudo apt-get install python3-dev
-    
+      - uses: actions/cache@v2
+        with:
+          path: |
+            .buildozer_global
+            .buildozer
+            .ccache  # Include the .ccache directory
+          key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
+  
       - name: Update Buildozer
         run: | 
           python3 -m pip install --upgrade buildozer
