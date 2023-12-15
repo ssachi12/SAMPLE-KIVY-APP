@@ -21,6 +21,7 @@ jobs:
         run: | 
           python3 -m pip install --upgrade buildozer
           python3 -m pip install --upgrade kivy pyjnius
+          pip install jnius
           sudo apt-get install lld
           sudo apt-get install ccache
           pip install cython==0.29.19
