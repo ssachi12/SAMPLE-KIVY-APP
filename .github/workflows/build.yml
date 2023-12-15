@@ -17,7 +17,10 @@ jobs:
           echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
         shell: bash
       - name: Install Python Dev Headers
-        run: sudo apt-get install python3-dev
+        run: |
+          sudo apt-get install python3-dev
+          buildozer android clean
+
         
       - name: Update Buildozer
         run: | 
@@ -62,7 +65,11 @@ jobs:
 
       - name: Install AIDL
         run: sudo apt-get install -y aidl
-        
+      - name: Print Environment Info
+        run: |
+          echo "Python Version: $(python3 --version)"
+          echo "Python Path: $(which python3)"
+          echo "System PATH: $PATH"  
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
