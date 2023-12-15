@@ -109,7 +109,7 @@ android.presplash_color = black
 
 # (str) Android NDK version to use
 #android.ndk = 23b
-java.home = /opt/hostedtoolcache/Java_Adopt_jdk/8.0.392-8/x64
+#java.home = /opt/hostedtoolcache/Java_Adopt_jdk/8.0.392-8/x64
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21
 
@@ -300,7 +300,7 @@ android.allow_backup = True
 #p4a.fork = kivy
 
 # (str) python-for-android branch to use, defaults to master
-p4a.branch = master
+p4a.branch = develop
 
 # (str) python-for-android specific commit to use, defaults to HEAD, must be within p4a.branch
 #p4a.commit = HEAD
@@ -315,7 +315,7 @@ p4a.branch = master
 #p4a.hook =
 
 # (str) Bootstrap to use for android builds
-# p4a.bootstrap = sdl2
+p4a.bootstrap = sdl2
 
 # (int) port number to specify an explicit --port= p4a argument (eg for bootstrap flask)
 #p4a.port =
