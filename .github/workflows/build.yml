@@ -17,7 +17,9 @@ jobs:
           echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
         shell: bash
       - name: Update Buildozer
-        run: python3 -m pip install --upgrade buildozer
+        run: | 
+          python3 -m pip install --upgrade buildozer
+          python3 -m pip install --upgrade kivy
         
       - name: Install Java (Optional, adjust based on your needs)
         run: |
