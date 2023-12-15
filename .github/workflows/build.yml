@@ -16,7 +16,14 @@ jobs:
         run: |
           echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
         shell: bash
-  
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
       - name: Update Buildozer
         run: | 
           python3 -m pip install --upgrade buildozer
@@ -72,7 +79,7 @@ jobs:
         with:
           command: |
             echo "y" | buildozer android debug
-          buildozer_version: master
+          buildozer_version: 0.11.2
         if: ${{ always() }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
