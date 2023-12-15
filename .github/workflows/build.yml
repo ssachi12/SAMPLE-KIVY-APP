@@ -20,6 +20,8 @@ jobs:
         run: | 
           python3 -m pip install --upgrade buildozer
           python3 -m pip install --upgrade kivy pyjnius
+          sudo apt-get install lld
+          sudo apt-get install ccache
         
       - name: Install Java (Optional, adjust based on your needs)
         run: |
