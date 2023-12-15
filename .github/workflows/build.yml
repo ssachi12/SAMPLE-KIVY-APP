@@ -25,16 +25,15 @@ jobs:
           sudo apt-get install ccache
           pip install cython==0.29.19
           
-      - name: Install Java (Optional, adjust based on your needs)
+      - name: Install JDK 8
         run: |
-          sudo apt update && sudo apt install -y --no-install-recommends openjdk-11-jdk-headless
-
-          # Add the JDK bin directory to PATH (comment out if using JDK_PATH)
-          # echo "export PATH=$(/usr/bin/java -verbose:class | grep '-Djava.home' | sed 's/.*:\///')" >> ~/.bashrc
-
-      - name: Set JDK path (alternative to PATH modification)
-        run: |
-          echo "jdk_path=$(/usr/bin/java -verbose:class | grep '-Djava.home' | sed 's/.*:\///')" >> buildozer.spec
+          sudo apt update && sudo apt install -y openjdk-8-jdk-headless
+      
+          # Get JDK path
+          jdk_path=$(readlink -f $(which java))
+      
+          # Set JDK path in buildozer.spec
+          echo "jdk_path=$jdk_path" >> buildozer.spec
           
       - name: Install build tools
         run: |
