@@ -9,7 +9,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      - name: Clean Buildozer
+        run: buildozer android clean
+        
       # used to cache dependencies with a timeout
       - name: Get Date
         id: get-date
@@ -19,9 +21,7 @@ jobs:
       - name: Install Python Dev Headers
         run: |
           sudo apt-get install python3-dev
-          buildozer android clean
-
-        
+    
       - name: Update Buildozer
         run: | 
           python3 -m pip install --upgrade buildozer
